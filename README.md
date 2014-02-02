@@ -5,21 +5,23 @@ iOSCustomPageControllerDemoProject
 
 ##About 
 
-><p> This page controller mimic's android style page controller, which we see in stock android's manage app option
-><p> You can use this as and alternative to existing iOS page controller, or too keep UI consistency among android and iOS app
+><p> This page controller mimic's android style page controller, which we see in stock android's manage app option.
+><p> You can use this as alternative to existing iOS page controller, or too keep UI consistency among android and iOS app.
 
-><p>This demo project has some basic code which you can use to create this type of page control 
+><p>This demo project has some basic code which you can use to create this type of page control and modify as per your requirement
 
 ## Basic idea behind this control
 
-This controller need to scroll views 
+Design :
+
+This controller needs to scroll views 
 
 1. Top scroll view - This will show titles of pages, for this UILabel's view are added to this.
 
-2. Bottom scroll view - This will show actual content of pages, for this UIViewController's views are added to this. (You can add view's from same view controller, most common case is table view controller)
+2. Bottom scroll view - This will show actual content of pages, for this UIViewController's views are added to this. (You can add view's from same view controller, most common case with this type of control is table view controller)
 
 
-Swiping through pages
+Handling page swipe :
 
 For this scrollview's delegate method is used
 
@@ -31,6 +33,7 @@ Page title is also animated with swipe effect along with page.
 
 ##Other Info : 
 
+Even this demo is created with following setup it can be easily created for iOS 4 and above.
 
 ><li>Works for : iOS 6 and above</li>
 
