@@ -6,7 +6,7 @@ iOSCustomPageControllerDemoProject
 ##About 
 
 ><p> This page controller mimic's android style page controller, which we see in stock android's manage app option.
-><p> You can use this as alternative to existing iOS page controller, or too keep UI consistency among android and iOS app.
+><p> You can use this as alternative to existing iOS page controller, or to keep UI consistency among android and iOS app.
 
 ><p>This demo project has some basic code which you can use to create this type of page control and modify as per your requirement
 
