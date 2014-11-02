@@ -1,7 +1,7 @@
 iOSCustomPageControllerDemoProject
 ==================================
 
-![      ](\red.png "") ![      ](\green.png "") ![      ](\blue.png "")
+![      ](\pagingDemo.gif "") 
 
 ##About 
 
