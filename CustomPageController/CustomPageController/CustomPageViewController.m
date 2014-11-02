@@ -10,9 +10,10 @@
 
 @interface CustomPageViewController ()<UIScrollViewDelegate>
 {
-    NSMutableArray *pageTitleLabelArray;
-    NSMutableArray *pageViewControllerArray;
+    NSMutableArray *_pageTitleLabelArray;
+    NSMutableArray *_pageViewControllerArray;
     int pageCount;
+    int _pageNo;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *topTitleScrollView;
@@ -31,6 +32,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self setupUI];
+    _pageNo = 0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,11 +67,11 @@
     titleLabelThree.textAlignment = NSTextAlignmentCenter;
     titleLabelThree.textColor = [UIColor blueColor];
     
-    pageTitleLabelArray = [[NSMutableArray alloc] initWithObjects:titleLabelOne,titleLabelTwo,titleLabelThree, nil];
+    _pageTitleLabelArray = [[NSMutableArray alloc] initWithObjects:titleLabelOne,titleLabelTwo,titleLabelThree, nil];
 
     
     
-    /*** Set view's to be displayed in bottom scrollview and add view's controllers to 'pageViewControllerArray' ***/
+    /*** Set view's to be displayed in bottom scrollview and add view's controllers to '_pageViewControllerArray' ***/
     
     UIStoryboard *mystoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
@@ -86,7 +88,7 @@
     [blueContentViewController.view setBackgroundColor:[UIColor blueColor]];
 
     
-    pageViewControllerArray = [[NSMutableArray alloc] initWithObjects:redContentViewController,
+    _pageViewControllerArray = [[NSMutableArray alloc] initWithObjects:redContentViewController,
                                greenContentViewController,
                                blueContentViewController,
                                nil];
@@ -119,7 +121,7 @@
     
     int pageNo = 1;
     
-    for (UILabel *pageTitleLabel in pageTitleLabelArray)
+    for (UILabel *pageTitleLabel in _pageTitleLabelArray)
     {
         pageTitleLabel.textAlignment = NSTextAlignmentCenter;
         
@@ -151,6 +153,9 @@
     /*********** Bottom Scroll View ************/
     
     _bottomPageDataScrollView.delegate = self;
+    _bottomPageDataScrollView.pagingEnabled = YES;
+    [_bottomPageDataScrollView setShowsHorizontalScrollIndicator:NO];
+    [_bottomPageDataScrollView setShowsVerticalScrollIndicator:NO];
     
     //Let scrollview accelerate with some low value
     _bottomPageDataScrollView.decelerationRate = 0.2;
@@ -167,7 +172,7 @@
     
     int pageNo = 1;
     
-    for (UIViewController *vc in pageViewControllerArray)
+    for (UIViewController *vc in _pageViewControllerArray)
     {
         /* Content page's x position calculation */
         
@@ -187,23 +192,19 @@
 
 
 #pragma ScrollView delegate methods
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    _topTitleScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x/2, 0);
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    _topTitleScrollView.contentOffset = CGPointMake(scrollView.contentOffset.x/2, 0);
+    
     CGFloat pageWidth = _bottomPageDataScrollView.frame.size.width;
     
-    //1. Calculate page no. if 50 percent or more area of any page visible make it as current page
-    int pageNo = floor((_bottomPageDataScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 2;
-    
-    //2. Make only current page (calculated in 1.) visible by scrolling to that page in detailScrollView
-    //Formula : xPos = pageWidth * (pageNo -1)
-    CGRect frame = CGRectMake( pageWidth * (pageNo -1), 0, pageWidth, 50);
-    [_bottomPageDataScrollView scrollRectToVisible:frame animated:YES];//OR set content offset
-    
-    //3. Make title visible of current page by scrolling to that title in titleScrollView
-    //Formula : xPos = (pageWidth / 2) * (pageNo -1)
-    CGRect titleFrame = CGRectMake( 160 * (pageNo -1), 0, pageWidth, 10);
-    [_topTitleScrollView scrollRectToVisible:titleFrame animated:YES];//OR set content offset
+    //Calculate page no. if 50 percent or more area of any page visible make it as current page
+    _pageNo = floor((_bottomPageDataScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 2;
 }
 
 
