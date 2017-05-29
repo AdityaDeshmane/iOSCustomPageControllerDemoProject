@@ -1,7 +1,7 @@
 iOSCustomPageControllerDemoProject
 ==================================
 
-![      ](\pagingDemo.gif "") 
+![      ](/pagingDemo.gif "") 
 
 ##About 
 
